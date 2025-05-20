@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Catalog.Grpc"; 
+
+package catalogapi;
+
+service CatalogService {
+  rpc ValidateAndGetDetails (ValidateAndGetDetailsRequest) returns (ValidateAndGetDetailsResponse);
+}
+
+message ValidateAndGetDetailsRequest {
+  repeated ItemToValidate itemsToValidate = 1;
+}
+
+message ItemToValidate {
+  string productId = 1;
+  int32 quantity = 2;
+}
+
+enum OverallValidationStatus {
+  OVERALL_VALIDATION_STATUS_UNSPECIFIED = 0; 
+  VALID = 1;                            
+  INVALID = 2;                              
+}
+
+message ValidatedItem {
+  string productId = 1;
+  string productName = 2;
+  double unitPrice = 3;   
+  int32 quantity = 4;
+}
+
+
+message ErrorDetail {
+  string productId = 1;
+  string reason = 2;           
+  int32 requestedQuantity = 3; 
+}
+
+message ValidateAndGetDetailsResponse {
+  OverallValidationStatus overallStatus = 1;   
+  repeated ValidatedItem validatedItems = 2;  
+  repeated ErrorDetail errorDetails = 3;       
+}

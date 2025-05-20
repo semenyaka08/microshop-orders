@@ -1,3 +1,4 @@
+using Catalog.API.Services;
 using Catalog.BusinessLogic.Services;
 using Catalog.DAL;
 using Catalog.DAL.Seeder;
@@ -7,6 +8,7 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddGrpc();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -43,5 +45,6 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapControllers();
+app.MapGrpcService<CatalogGrpcService>();
 
 app.Run();
